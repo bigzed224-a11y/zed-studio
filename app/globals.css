@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core palette — exact logo match */
+  --color-bg: #0B0F0C;
+  --color-bg-warm: #0E1310;
+  --color-surface: #131A15;
+  --color-card: #19201B;
+  --color-border: #243028;
+  --color-border-hover: #3A5040;
+  --color-text: #EAE7DF;
+  --color-text-secondary: #A8A59C;
+  --color-text-muted: #6B6B62;
+
+  /* Logo gold — antique/warm gold from ZS monogram */
+  --color-gold: #C9A44E;
+  --color-gold-hover: #D9B662;
+  --color-accent: #C9A44E;
+  --color-accent-hover: #D9B662;
+
+  /* Logo green — muted sage from background */
+  --color-green: #5F8464;
+  --color-green-light: #7DA082;
+  --color-green-dark: #3E5E42;
+  --color-green-muted: rgba(95, 132, 100, 0.18);
+
+  /* Logo text cream */
+  --color-cream: #D8D5CC;
+
+  --font-display: "Cormorant Garamond", "Georgia", serif;
+  --font-body: "DM Sans", "Helvetica Neue", sans-serif;
+  --font-mono: "DM Mono", ui-monospace, monospace;
+
+  --radius-sm: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --space-section: clamp(6rem, 14vw, 12rem);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.section-py {
+  padding-block: var(--space-section);
+}
+
+.section-container {
+  margin-inline: auto;
+  max-width: 75rem;
+  padding-inline: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* Grain overlay — very subtle */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: #2A2826; border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
+
+/* Editorial button */
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 1rem 2.25rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 0;
+  transition: all 0.5s var(--ease-out);
+}
+
+.btn-editorial:active {
+  transform: scale(0.98);
+}
+
+/* Underline hover effect */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width 0.5s var(--ease-out);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Number label */
+.num-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Tech animated background */
+.tech-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, var(--color-green-muted) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(201, 164, 78, 0.1) 0%, transparent 50%);
+  animation: tech-pulse 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes tech-pulse {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Grid lines overlay for tech feel */
+.grid-overlay {
+  position: relative;
+}
+
+.grid-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(95, 132, 100, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(95, 132, 100, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
