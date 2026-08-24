@@ -95,8 +95,21 @@ body::after {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { background: #2A2826; border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
+
+/* Section divider — subtle sage line */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-green-muted), var(--color-gold), var(--color-green-muted), transparent);
+  opacity: 0.6;
+}
+
+/* Green glow pulse for emphasis */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(95, 132, 100, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(95, 132, 100, 0.1); }
+}
 
 /* Editorial button */
 .btn-editorial {
@@ -184,4 +197,11 @@ body::after {
   background-size: 60px 60px;
   pointer-events: none;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+/* Smooth transitions for all interactive elements */
+a, button {
+  transition-property: color, background-color, border-color, opacity, transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 0.3s;
 }

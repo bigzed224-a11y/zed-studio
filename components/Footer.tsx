@@ -2,6 +2,7 @@
 
 import { ArrowUp, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import { useSmoothScroll } from "@/lib/use-smooth-scroll";
 
@@ -94,9 +95,18 @@ export default function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 sm:flex-row sm:px-10">
           {/* Logo + Copyright */}
           <div className="flex flex-col items-center gap-4 sm:items-start">
-            <span className="font-display text-xl font-semibold tracking-tight text-text">
-              Zed Studio
-            </span>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/zed-logo-main.png"
+                alt="Zed Studio"
+                width={32}
+                height={32}
+                className="h-8 w-auto rounded-full"
+              />
+              <span className="font-display text-lg font-semibold tracking-tight text-text">
+                Zed Studio
+              </span>
+            </div>
             <p className="font-mono text-[10px] text-text-muted">
               © {new Date().getFullYear()} Zed Studio · All rights reserved.
             </p>

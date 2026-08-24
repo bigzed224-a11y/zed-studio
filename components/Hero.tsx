@@ -66,15 +66,16 @@ export default function Hero() {
           initial={reduce ? undefined : { opacity: 0, scale: 0.85 }}
           animate={reduce ? undefined : { opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Image
+        >            <div className="relative">
+            <Image
             src="/images/zed-logo-main.png"
             alt="Zed Studio"
             width={260}
             height={260}
-            className="h-auto w-auto max-h-[260px] mix-blend-screen drop-shadow-[0_0_60px_rgba(184,149,106,0.15)]"
+            className="h-auto w-auto max-h-[260px] rounded-full drop-shadow-[0_0_80px_rgba(95,132,100,0.2)]"
             priority
           />
+            </div>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
@@ -86,8 +87,8 @@ export default function Hero() {
             {/* micro-scale-fade for label */}
             <div className="mb-8">
               <TextAnimate type="micro-scale-fade">
-                <span className="num-label mb-8 inline-block border border-white/20 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
-                  ZED STUDIO — Web Development & Design Agency
+                <span className="num-label mb-8 inline-block border border-white/15 bg-white/[0.04] px-5 py-2 backdrop-blur-sm">
+                  Web Development & Design Agency
                 </span>
               </TextAnimate>
             </div>
@@ -100,7 +101,7 @@ export default function Hero() {
               <TextAnimate type="soft-blur-in" as="span" delay={0.3}>
                 We Build Websites
               </TextAnimate>
-              <br />
+              <br className="hidden sm:block" />
               <TextAnimate type="soft-blur-in" as="span" delay={0.7}>
                 & Digital Products{" "}
                 <span className="italic text-gold">That Convert.</span>
@@ -132,9 +133,9 @@ export default function Hero() {
                 </a>
                 <a
                   href="#contact"
-                  className="btn-editorial border border-white/30 text-white hover:border-gold hover:text-gold"
+                  className="btn-editorial border border-white/25 text-white/90 hover:border-gold hover:text-gold"
                 >
-                  Book a Discovery Call
+                  Book a Call
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>

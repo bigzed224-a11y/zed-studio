@@ -49,15 +49,18 @@ export default function Nav() {
               e.preventDefault();
               handleNavClick("#top");
             }}
-            className="flex items-center gap-3"
+            className="flex items-center gap-3 group"
           >
             <Image
               src="/images/zed-logo-main.png"
               alt="Zed Studio"
               width={40}
               height={40}
-              className="h-10 w-auto mix-blend-screen"
+              className="h-10 w-auto rounded-full"
             />
+            <span className="font-display text-lg font-semibold tracking-tight text-text">
+              Zed Studio
+            </span>
           </a>
 
           {/* Desktop */}
@@ -70,7 +73,7 @@ export default function Nav() {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="link-underline font-body text-[0.8125rem] font-medium tracking-widest uppercase text-text-secondary transition-colors hover:text-text"
+                className="link-underline font-body text-[0.8125rem] font-medium tracking-widest uppercase text-text-muted transition-colors hover:text-gold"
                 initial={reduce ? undefined : { opacity: 0, y: -8 }}
                 animate={reduce ? undefined : { opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + i * 0.06 }}

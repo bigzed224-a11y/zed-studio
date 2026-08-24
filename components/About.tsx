@@ -2,6 +2,7 @@
 
 import { Globe } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import TechBackground from "./TechBackground";
 
@@ -66,6 +67,23 @@ export default function About() {
               <span className="border border-border px-4 py-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-text-muted">
                 Apple Pay
               </span>
+            </div>
+
+            {/* Brand logo display */}
+            <div className="mt-10 border-t border-border pt-8">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/images/zed-logo-main.png"
+                  alt="Zed Studio"
+                  width={64}
+                  height={64}
+                  className="h-16 w-auto rounded-full"
+                />
+                <div>
+                  <p className="font-display text-lg font-medium text-text">Zed Studio</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-muted">Design · Development · Branding</p>
+                </div>
+              </div>
             </div>
           </Reveal>
 

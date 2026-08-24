@@ -29,10 +29,15 @@ export default function Home() {
         <Nav />
         <Hero />
         <Marquee items={marqueeItems} />
+        <div className="section-divider" />
         <Work />
+        <div className="section-divider" />
         <Services />
+        <div className="section-divider" />
         <WhyZed />
+        <div className="section-divider" />
         <About />
+        <div className="section-divider" />
         <Contact />
         <Footer />
       </main>
