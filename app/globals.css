@@ -15,6 +15,7 @@
 
 html {
   background: #11100d;
+  overflow-x: clip;
 }
 
 body {
@@ -34,6 +35,13 @@ body {
 :focus-visible {
   outline: 2px solid #d0c5ab;
   outline-offset: 3px;
+}
+
+/* Tailwind v4 preflight no longer sets pointer cursor on interactive elements */
+button:not(:disabled),
+[role="button"]:not(:disabled),
+summary {
+  cursor: pointer;
 }
 
 /* Lenis smooth scroll */

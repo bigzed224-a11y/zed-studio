@@ -147,7 +147,7 @@ function CaseCard({
             </p>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs uppercase tracking-[0.08em] text-beige/50">
+            <span className="text-xs uppercase tracking-[0.08em] text-beige/60">
               {project.category}
             </span>
             <button

@@ -69,7 +69,7 @@ export default function Footer() {
         </nav>
       </div>
 
-      <div className="mt-16 flex items-center justify-between border-t border-line pt-6 text-xs text-beige/50">
+      <div className="mt-16 flex items-center justify-between border-t border-line pt-6 text-xs text-beige/60">
         <span>© {new Date().getFullYear()} Zed Studio</span>
         <button
           onClick={() => scrollTo("#top")}

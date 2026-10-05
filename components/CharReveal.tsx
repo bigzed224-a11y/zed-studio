@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 
 function Char({
   char,
@@ -15,7 +15,7 @@ function Char({
   const opacity = useTransform(progress, range, [0.12, 1]);
   return (
     <motion.span aria-hidden style={{ opacity }}>
-      {char === " " ? "\u00A0" : char}
+      {char}
     </motion.span>
   );
 }
@@ -32,21 +32,35 @@ export default function CharReveal({
     target: ref,
     offset: ["start 0.92", "start 0.4"],
   });
-  const chars = Array.from(text);
+
+  // Group characters into words so lines can wrap at word boundaries.
+  let cursor = 0;
+  const words = text.split(" ").map((word) => {
+    const start = cursor;
+    cursor += word.length + 1; // +1 for the space that follows
+    return { word, start };
+  });
 
   return (
     <p ref={ref} aria-label={text} className={className}>
-      {chars.map((char, i) => {
-        const start = (i / chars.length) * 0.85;
-        return (
-          <Char
-            key={i}
-            char={char}
-            progress={scrollYProgress}
-            range={[start, Math.min(start + 0.15, 1)]}
-          />
-        );
-      })}
+      {words.map(({ word, start }, wi) => (
+        <Fragment key={wi}>
+          <span aria-hidden className="inline-block whitespace-nowrap">
+            {Array.from(word).map((char, ci) => {
+              const from = (start + ci) / text.length;
+              return (
+                <Char
+                  key={ci}
+                  char={char}
+                  progress={scrollYProgress}
+                  range={[from * 0.85, Math.min(from * 0.85 + 0.15, 1)]}
+                />
+              );
+            })}
+          </span>
+          {wi < words.length - 1 ? " " : null}
+        </Fragment>
+      ))}
     </p>
   );
 }

@@ -32,7 +32,7 @@ export default function Testimonials() {
         <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70">
           [ What clients say ]
         </span>
-        <span className="hidden text-xs text-beige/40 md:block">
+        <span className="hidden text-xs text-beige/60 md:block">
           Replace with real feedback
         </span>
       </div>
@@ -61,7 +61,7 @@ export default function Testimonials() {
             </div>
             <figcaption>
               <p className="text-sm font-semibold text-beige">{item.name}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.08em] text-beige/50">
+              <p className="mt-1 text-xs uppercase tracking-[0.08em] text-beige/60">
                 {item.project}
               </p>
             </figcaption>

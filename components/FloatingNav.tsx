@@ -29,7 +29,7 @@ export default function FloatingNav() {
         ))}
         <button
           onClick={() => scrollTo("#contact")}
-          className="ml-1 flex items-center gap-2 rounded bg-beige px-4 py-3 text-[11px] font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.04] md:px-5 md:text-xs"
+          className="ml-1 flex items-center gap-2 whitespace-nowrap rounded bg-beige px-4 py-3 text-[11px] font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.04] md:px-5 md:text-xs"
         >
           Let&apos;s talk
           <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />

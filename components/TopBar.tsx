@@ -7,7 +7,7 @@ export default function TopBar() {
   const { scrollTo } = useSiteScroll();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 md:px-10">
+    <header className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-gradient-to-b from-ink/90 via-ink/60 to-transparent px-6 py-5 md:px-10">
       <button
         onClick={() => scrollTo("#top")}
         data-logo-anchor

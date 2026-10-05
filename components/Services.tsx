@@ -54,7 +54,7 @@ export default function Services() {
             className="group flex flex-col gap-3 border-t border-line py-8 transition-colors duration-300 hover:bg-ink-2 md:flex-row md:items-center md:justify-between md:gap-10 md:py-10"
           >
             <div className="flex items-baseline gap-4 md:gap-6">
-              <span className="text-xs font-medium text-beige/40">
+              <span className="text-xs font-medium text-beige/60">
                 0{i + 1}
               </span>
               <h3 className="text-[clamp(1.4rem,3vw,2.6rem)] font-semibold leading-tight tracking-[-0.02em] text-beige transition-colors duration-300 group-hover:text-gold">
@@ -65,7 +65,7 @@ export default function Services() {
               <p className="text-sm leading-relaxed text-beige/70">
                 {service.desc}
               </p>
-              <ArrowUpRight className="hidden h-5 w-5 shrink-0 text-beige/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-beige md:block" />
+              <ArrowUpRight className="hidden h-5 w-5 shrink-0 text-beige/50 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-beige md:block" />
             </div>
           </motion.div>
         ))}

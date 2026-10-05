@@ -60,7 +60,7 @@ export default function Contact() {
   }
 
   const inputClass =
-    "w-full border-b border-line bg-transparent py-3 text-base text-beige placeholder:text-beige/40 outline-none transition-colors focus:border-beige";
+    "w-full border-b border-line bg-transparent py-3 text-base text-beige placeholder:text-beige/50 outline-none transition-colors focus:border-beige";
 
   return (
     <section
