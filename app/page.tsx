@@ -7,6 +7,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Manifesto from "@/components/Manifesto";
+import ParallaxStrip from "@/components/ParallaxStrip";
 import Preloader from "@/components/Preloader";
 import Projects from "@/components/Projects";
 import Services from "@/components/Services";
@@ -22,8 +23,17 @@ export default function Home() {
       <main id="top" className="relative">
         <Hero />
         <Ticker />
+        <ParallaxStrip
+          src="/images/work/daniel-portrait-cover.webp"
+          alt="Fashion portrait work by Zed Studio"
+        />
         <Manifesto />
         <Projects />
+        <ParallaxStrip
+          src="/images/work/red-apple-cover.webp"
+          alt="Red Apple book cover design"
+          height="60vh"
+        />
         <Services />
         <About />
         <Contact />
