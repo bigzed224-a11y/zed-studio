@@ -1,177 +1,91 @@
-"use client";
-
-import { Globe } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import Reveal from "./Reveal";
-import TechBackground from "./TechBackground";
+import CharReveal from "./CharReveal";
 
-const skills = [
-  "Web Development",
-  "Web Applications",
-  "UI/UX Design",
-  "Brand Identity",
-  "Responsive Design",
-  "Full-Stack Dev",
-];
-const tools = ["React", "Next.js", "TypeScript", "Tailwind CSS", "Node.js", "Figma"];
-const points = [
-  "Custom websites built for performance and conversion",
-  "Modern tech stack: React, Next.js, TypeScript",
-  "From concept to deployment — we handle everything",
-  "Ongoing support and maintenance available",
+const TICKER = [
+  {
+    src: "/images/work/daniel-portrait-cover.webp",
+    alt: "Fashion model portrait",
+  },
+  {
+    src: "/images/work/wedding-save-the-date-cover.webp",
+    alt: "Save the date suite",
+  },
+  {
+    src: "/images/work/ob-brand-logo-cover.webp",
+    alt: "OB brand identity",
+  },
+  {
+    src: "/images/work/business-card-1.webp",
+    alt: "Minimalist gold business card",
+  },
 ];
 
 export default function About() {
-  const reduce = useReducedMotion();
-
   return (
-    <section id="about" className="section-py">
-      <TechBackground variant="gold">
-      <div className="section-container">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24">
-          {/* Left column — text */}
-          <Reveal>
-            <p className="num-label mb-4">About Zed Studio</p>
-            <h2
-              className="font-display font-light tracking-tight text-text"
-              style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
-            >
-              Design meets
-              <br />
-              <span className="italic text-text-secondary">technology.</span>
-            </h2>
+    <section id="about" className="px-6 py-28 md:px-10 md:py-40">
+      <CharReveal
+        className="max-w-5xl text-[clamp(1.8rem,4vw,4rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-beige"
+        text="We're Zed Studio — a design and development practice building brands and digital products people remember."
+      />
 
-            <div className="mt-8 space-y-5 text-[0.9375rem] leading-relaxed text-text-secondary">
-              <p>
-                Zed Studio is a web development and design studio specializing
-                in building high-performance websites, web applications, and
-                digital products that drive results.
-              </p>
-              <p>
-                We combine modern development with sharp design to create
-                fast, responsive, and visually stunning digital experiences.
-                From landing pages to full-stack applications — we build
-                it all.
-              </p>
-            </div>
+      <div className="mt-20 grid gap-12 md:mt-28 md:grid-cols-12 md:gap-10">
+        <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70 md:col-span-3">
+          [ The studio ]
+        </span>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                <Globe className="h-3 w-3 text-gold" />
-                Remote / Global
-              </span>
-              <span className="border border-border px-4 py-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                Cash App
-              </span>
-              <span className="border border-border px-4 py-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                Apple Pay
-              </span>
-            </div>
+        <div className="md:col-span-5">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-md">
+            <Image
+              src="/images/work/daniel-portrait-cover.webp"
+              alt="Zed Studio — fashion portrait work"
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
 
-            {/* Brand logo display */}
-            <div className="mt-10 border-t border-border pt-8">
-              <div className="flex items-center gap-4">
-                <Image
-                  src="/images/zed-logo-main.png"
-                  alt="Zed Studio"
-                  width={64}
-                  height={64}
-                  className="h-16 w-auto rounded-full"
-                />
-                <div>
-                  <p className="font-display text-lg font-medium text-text">Zed Studio</p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-muted">Design · Development · Branding</p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Right column — skills card */}
-          <Reveal delay={0.1}>
-            <motion.div
-              className="border border-border bg-surface p-8 sm:p-10"
-              initial={reduce ? undefined : { opacity: 0, x: 30 }}
-              whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.8,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <h3 className="num-label mb-4">Skills</h3>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill, i) => (
-                  <motion.span
-                    key={skill}
-                    className="border border-border bg-bg px-4 py-2 text-sm font-medium text-text-secondary transition-colors duration-300 hover:border-gold hover:text-gold"
-                    initial={
-                      reduce ? undefined : { opacity: 0, scale: 0.95 }
-                    }
-                    whileInView={
-                      reduce ? undefined : { opacity: 1, scale: 1 }
-                    }
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.04, duration: 0.4 }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-
-              <h3 className="num-label mb-4 mt-8">Tools</h3>
-              <div className="flex flex-wrap gap-2">
-                {tools.map((tool, i) => (
-                  <motion.span
-                    key={tool}
-                    className="border border-gold/20 bg-gold/5 px-4 py-2 text-sm font-medium text-gold transition-colors duration-300 hover:bg-gold hover:text-bg"
-                    initial={
-                      reduce ? undefined : { opacity: 0, scale: 0.95 }
-                    }
-                    whileInView={
-                      reduce ? undefined : { opacity: 1, scale: 1 }
-                    }
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: 0.25 + i * 0.04,
-                      duration: 0.4,
-                    }}
-                  >
-                    {tool}
-                  </motion.span>
-                ))}
-              </div>
-
-              <div className="mt-10 border-t border-border pt-8">
-                <h3 className="num-label mb-5">Why Work With Us</h3>
-                <ul className="space-y-3">
-                  {points.map((point, i) => (
-                    <motion.li
-                      key={point}
-                      className="flex items-start gap-3 text-sm font-medium text-text-secondary"
-                      initial={
-                        reduce ? undefined : { opacity: 0, x: 8 }
-                      }
-                      whileInView={
-                        reduce ? undefined : { opacity: 1, x: 0 }
-                      }
-                      viewport={{ once: true }}
-                      transition={{
-                        delay: 0.4 + i * 0.06,
-                        duration: 0.5,
-                      }}
-                    >
-                      <span className="mt-1.5 h-1 w-1 shrink-0 bg-gold" />
-                      {point}
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </Reveal>
+        <div className="flex flex-col gap-10 md:col-span-4">
+          <p className="text-lg leading-relaxed text-beige/80">
+            Zed Studio started with one goal: make brands impossible to ignore.
+            Today we design logos, covers, print and full websites for clients
+            worldwide.
+          </p>
+          <p className="text-lg leading-relaxed text-beige/80">
+            From the first sketch to the shipped product, everything is crafted
+            in-house — pixel by pixel.
+          </p>
+          <div>
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+              [ What we do best ]
+            </span>
+            <p className="mt-4 text-sm leading-relaxed text-beige/70">
+              Web Development, UI/UX, Brand Identity, Logo Design, Art Covers,
+              Print, Social Content — React, Next.js, TypeScript, Tailwind,
+              Node.js, Figma.
+            </p>
+          </div>
         </div>
       </div>
-      </TechBackground>
+
+      <div className="mt-24 overflow-hidden md:mt-32">
+        <div className="flex w-max animate-marquee gap-8">
+          {[...TICKER, ...TICKER].map((item, i) => (
+            <div
+              key={`${item.src}-${i}`}
+              className="relative h-40 w-40 shrink-0 overflow-hidden rounded-md md:h-56 md:w-56"
+            >
+              <Image
+                src={item.src}
+                alt={i < TICKER.length ? item.alt : ""}
+                fill
+                sizes="224px"
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

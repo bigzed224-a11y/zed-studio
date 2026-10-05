@@ -1,25 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, DM_Sans, DM_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-display",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const dmMono = DM_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -27,33 +13,28 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: "#11100d",
 };
 
 export const metadata: Metadata = {
-  title: "Zed Studio — Design & Technology",
+  title: "Zed Studio — Websites & Digital Products",
   description:
-    "Zed Studio is a design and technology studio crafting refined digital experiences. Brand identity, web design, and development.",
+    "Zed Studio designs and builds websites, brand identities and digital products that convert, simplify, and scale. Logo design, art covers, print, web development.",
+  icons: { icon: "/images/zed-logo-main.png" },
   openGraph: {
-    title: "Zed Studio — Design & Technology",
+    title: "Zed Studio — Websites & Digital Products",
     description:
-      "Design and technology studio crafting refined digital experiences.",
+      "Websites, brand identities and digital products that convert, simplify, and scale.",
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable} antialiased`}
-    >
-      <body className="min-h-screen bg-bg text-text font-body">
-        {children}
-      </body>
+    <html lang="en" className={`${jakarta.variable} antialiased`}>
+      <body className="bg-ink font-sans text-beige">{children}</body>
     </html>
   );
 }

@@ -1,269 +1,180 @@
 "use client";
 
-import { ArrowUpRight, Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
-import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import Reveal from "./Reveal";
-import TechBackground from "./TechBackground";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { useState, type FormEvent } from "react";
+import { useSiteScroll } from "../lib/scroll";
 
-function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
-}
-
-function TikTokIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-    </svg>
-  );
-}
+const FLOATERS = [
+  {
+    src: "/images/work/business-card-1.webp",
+    className: "left-[4%] top-[12%] w-32 -rotate-6 opacity-50 md:w-44",
+  },
+  {
+    src: "/images/work/moth-emblem-cover.webp",
+    className: "right-[6%] top-[8%] w-36 rotate-3 opacity-50 md:w-48",
+  },
+  {
+    src: "/images/work/wedding-save-the-date-cover.webp",
+    className: "bottom-[12%] left-[8%] w-28 rotate-2 opacity-40 md:w-40",
+  },
+  {
+    src: "/images/work/fashion-flyer-cover.jpg",
+    className: "bottom-[16%] right-[10%] w-32 -rotate-3 opacity-40 md:w-44",
+  },
+  {
+    src: "/images/work/ob-brand-logo-cover.webp",
+    className: "right-[28%] top-[4%] hidden w-24 rotate-6 opacity-30 lg:block md:w-32",
+  },
+];
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const { scrollTo } = useSiteScroll();
   const reduce = useReducedMotion();
+  const [status, setStatus] = useState<Status>("idle");
 
-  async function handleSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
     setStatus("sending");
-    setErrorMsg("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({
+          name: String(data.get("name") ?? ""),
+          email: String(data.get("email") ?? ""),
+          message: String(data.get("message") ?? ""),
+        }),
       });
-      const data = await res.json();
-      if (!res.ok)
-        throw new Error(data.error || "Something went wrong.");
+      if (!res.ok) throw new Error("Request failed");
       setStatus("success");
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (err) {
+      form.reset();
+    } catch {
       setStatus("error");
-      setErrorMsg(
-        err instanceof Error ? err.message : "Something went wrong."
-      );
     }
   }
 
+  const inputClass =
+    "w-full border-b border-line bg-transparent py-3 text-base text-beige placeholder:text-beige/40 outline-none transition-colors focus:border-beige";
+
   return (
-    <section id="contact" className="section-py">
-      <TechBackground variant="green">
-      <div className="section-container">
-        <Reveal className="mb-16">
-          <p className="num-label mb-4">Get in Touch</p>
-          <h2
-            className="max-w-3xl font-display font-light leading-[1.05] tracking-tight text-text"
-            style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)" }}
+    <section
+      id="contact"
+      className="relative overflow-hidden px-6 py-32 md:px-10 md:py-44"
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {FLOATERS.map((f) => (
+          <div
+            key={f.src}
+            className={`absolute overflow-hidden rounded-md ${f.className}`}
           >
-            Let&apos;s build something
-            <br />
-            <span className="italic text-text-secondary">
-              great together.
-            </span>
-          </h2>
-        </Reveal>
-
-        <Reveal delay={0.08}>
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Form */}
-            <div>
-              {status === "success" ? (
-                <motion.div
-                  initial={
-                    reduce ? undefined : { opacity: 0, scale: 0.97 }
-                  }
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center gap-4 border border-border bg-surface p-12 text-center"
-                >
-                  <CheckCircle className="h-10 w-10 text-gold" />
-                  <h3 className="font-display text-2xl font-medium text-text">
-                    Message sent.
-                  </h3>
-                  <p className="text-sm text-text-secondary">
-                    Thank you for reaching out. We will be in touch soon.
-                  </p>
-                  <button
-                    onClick={() => setStatus("idle")}
-                    className="mt-3 text-sm font-medium text-gold underline underline-offset-4 hover:text-text"
-                  >
-                    Send another
-                  </button>
-                </motion.div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-5 border border-border bg-surface p-8"
-                >
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="num-label mb-1.5 block"
-                    >
-                      Name
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      className="w-full border border-border bg-bg px-4 py-3 text-sm font-medium text-text placeholder:text-text-muted outline-none transition-colors focus:border-gold"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="num-label mb-1.5 block"
-                    >
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className="w-full border border-border bg-bg px-4 py-3 text-sm font-medium text-text placeholder:text-text-muted outline-none transition-colors focus:border-gold"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="num-label mb-1.5 block"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      required
-                      rows={5}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Tell us about your project..."
-                      className="w-full resize-none border border-border bg-bg px-4 py-3 text-sm font-medium text-text placeholder:text-text-muted outline-none transition-colors focus:border-gold"
-                    />
-                  </div>
-
-                  {status === "error" && (
-                    <div className="flex items-center gap-2 bg-red-950/40 px-4 py-3 text-sm font-medium text-red-400">
-                      <AlertCircle className="h-4 w-4 shrink-0" />
-                      {errorMsg}
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={status === "sending"}
-                    className="group flex items-center justify-center gap-2 bg-gold px-6 py-3.5 text-sm font-bold text-bg transition-all duration-300 hover:bg-gold-hover disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    {status === "sending" ? (
-                      <>
-                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-bg border-t-transparent" />{" "}
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send message
-                        <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Contact info */}
-            <div className="flex flex-col gap-4">
-              {[
-                {
-                  icon: <Mail className="h-4 w-4" />,
-                  label: "Email",
-                  value: "zedcode1@yahoo.com",
-                  href: "mailto:zedcode1@yahoo.com",
-                },
-                {
-                  icon: <InstagramIcon className="h-4 w-4" />,
-                  label: "Instagram",
-                  value: "@zedstudio0",
-                  href: "https://www.instagram.com/zedstudio0?igsi=OXZiM2wzamVlYzE4",
-                },
-                {
-                  icon: <TikTokIcon className="h-4 w-4" />,
-                  label: "TikTok",
-                  value: "@zed.studio3",
-                  href: "https://www.tiktok.com/@zed.studio3?is_from_webapp=1&sender_device=pc",
-                },
-              ].map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    link.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="group flex items-center gap-4 border border-border bg-surface p-5 text-text transition-all duration-500 hover:-translate-y-0.5 hover:border-border-hover"
-                  initial={
-                    reduce ? undefined : { opacity: 0, y: 16 }
-                  }
-                  whileInView={
-                    reduce ? undefined : { opacity: 1, y: 0 }
-                  }
-                  viewport={{ once: true }}
-                  transition={{
-                    delay: 0.15 + i * 0.06,
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-border bg-bg text-gold">
-                    {link.icon}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="num-label">{link.label}</p>
-                    <p className="mt-0.5 truncate text-sm font-medium group-hover:text-gold transition-colors duration-300">
-                      {link.value}
-                    </p>
-                  </div>
-                  <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-text-muted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold" />
-                </motion.a>
-              ))}
-
-              <div className="mt-2 border-t border-border pt-5">
-                <p className="text-center font-mono text-[9px] font-medium uppercase tracking-[0.15em] text-text-muted">
-                  Payments accepted: Cash App · Apple Pay · Zelle · Venmo
-                </p>
-              </div>
-            </div>
+            <Image src={f.src} alt="" fill sizes="192px" className="object-cover" />
           </div>
-        </Reveal>
+        ))}
       </div>
-      </TechBackground>
+
+      <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+        <motion.span
+          initial={reduce ? undefined : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70"
+        >
+          [ Start a project ]
+        </motion.span>
+
+        <h2 className="mt-8 text-[clamp(2.4rem,6vw,5rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-beige">
+          Let&apos;s build
+          <br />
+          something together.
+        </h2>
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="mailto:zedcode1@yahoo.com"
+            className="flex items-center gap-2 rounded bg-beige px-6 py-4 text-xs font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.03]"
+          >
+            Let&apos;s talk
+            <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
+          </a>
+          <button
+            onClick={() => scrollTo("#brief")}
+            className="rounded border border-line px-6 py-4 text-xs font-bold uppercase tracking-wide text-beige/80 transition-colors hover:border-beige hover:text-beige"
+          >
+            Send a brief
+          </button>
+        </div>
+
+        <form
+          id="brief"
+          onSubmit={onSubmit}
+          className="mt-20 flex w-full max-w-xl flex-col gap-8 text-left"
+        >
+          <div className="grid gap-8 md:grid-cols-2">
+            <label className="flex flex-col gap-2">
+              <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+                Name
+              </span>
+              <input
+                name="name"
+                required
+                placeholder="Your name"
+                className={inputClass}
+              />
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+                Email
+              </span>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                className={inputClass}
+              />
+            </label>
+          </div>
+          <label className="flex flex-col gap-2">
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+              Message
+            </span>
+            <textarea
+              name="message"
+              required
+              rows={4}
+              placeholder="Tell us about your project…"
+              className={`${inputClass} resize-none`}
+            />
+          </label>
+
+          <div className="flex flex-wrap items-center gap-6">
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded bg-beige px-6 py-4 text-xs font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.03] disabled:opacity-60"
+            >
+              {status === "sending" ? "Sending…" : "Send message"}
+            </button>
+            {status === "success" && (
+              <p className="text-sm text-beige">
+                Message sent — we&apos;ll get back to you within 24 hours.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-beige/70">
+                Something went wrong — email us directly at zedcode1@yahoo.com.
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

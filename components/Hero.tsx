@@ -1,159 +1,143 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { ArrowDownRight, ArrowRight } from "lucide-react";
-import Image from "next/image";
-import Reveal from "./Reveal";
-import TextAnimate from "./TextAnimate";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDown } from "lucide-react";
+import type { ReactNode } from "react";
+import { useLoaded } from "../lib/scroll";
 
-export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
+const EASE: [number, number, number, number] = [0.44, 0, 0.56, 1];
+
+function Word({
+  text,
+  delay,
+  className = "",
+}: {
+  text: string;
+  delay: number;
+  className?: string;
+}) {
+  const loaded = useLoaded();
   const reduce = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const headingY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const headingOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const metaY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const logoScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.85]);
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const chars = Array.from(text);
 
   return (
-    <section
-      ref={ref}
-      id="top"
-      className="relative min-h-[100dvh] flex items-center overflow-hidden"
+    <span
+      aria-label={text}
+      className={`inline-flex overflow-hidden pb-[0.14em] -mb-[0.14em] ${className}`}
     >
-      {/* Video background */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ scale: videoScale }}
-      >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="h-full w-full object-cover"
-          poster="/images/zed-logo.webp"
+      {chars.map((char, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="inline-block will-change-transform"
+          initial={reduce ? { y: 0 } : { y: "115%" }}
+          animate={loaded ? { y: 0 } : reduce ? { y: 0 } : { y: "115%" }}
+          transition={{ duration: 0.9, delay: delay + i * 0.03, ease: EASE }}
         >
-          <source src="/video-bg.mp4" type="video/mp4" />
-        </video>
-      </motion.div>
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 z-[1] bg-black/70" />
+function StatCard({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const loaded = useLoaded();
+  const reduce = useReducedMotion();
 
-      {/* Gradient overlay for depth */}
+  return (
+    <motion.div
+      className={`absolute hidden w-[124px] rounded-md border border-line bg-ink-2/85 p-4 text-xs font-bold uppercase leading-snug text-beige/80 backdrop-blur lg:block ${className}`}
+      initial={reduce ? undefined : { opacity: 0, y: -24 }}
+      animate={loaded && !reduce ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.9, delay: 0.7, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export default function Hero() {
+  const loaded = useLoaded();
+  const reduce = useReducedMotion();
+
+  return (
+    <section className="relative h-[100svh] min-h-[620px] overflow-hidden">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden
+        src="/video-bg.mp4"
+        className="absolute inset-0 h-full w-full object-cover opacity-30"
+      />
       <div
-        className="absolute inset-0 z-[2]"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(12,12,12,0.2) 0%, rgba(12,12,12,0.5) 40%, rgba(12,12,12,0.85) 100%)",
-        }}
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/20 to-ink"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent"
       />
 
-      <div className="section-container relative z-10 w-full py-24 sm:py-32">
-        {/* Logo — centered, prominent */}
+      <div className="absolute inset-0 flex flex-col justify-between px-6 pb-8 pt-28 md:px-10 md:pt-32">
+        <h1
+          className="font-bold uppercase leading-[0.9] tracking-[-0.03em] text-beige"
+          style={{ fontSize: "clamp(3.2rem, 10.5vw, 12rem)" }}
+        >
+          <span className="block">
+            <Word text="Websites" delay={0.05} />
+          </span>
+          <span className="block text-right">
+            <Word text="&" delay={0.18} className="text-gold" />{" "}
+            <Word text="Digital" delay={0.24} />
+          </span>
+          <span className="block md:pl-[6vw]">
+            <Word text="Products" delay={0.32} />
+          </span>
+        </h1>
+
+        <motion.p
+          className="max-w-[300px] text-base leading-relaxed text-beige/80 md:ml-[22%] md:text-lg"
+          initial={reduce ? undefined : { opacity: 0, y: 24 }}
+          animate={loaded && !reduce ? { opacity: 1, y: 0 } : undefined}
+          transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
+        >
+          Hey — we&apos;re Zed Studio. We design and build websites and digital
+          products that convert, simplify, and scale.
+        </motion.p>
+
         <motion.div
-          className="flex justify-center mb-16"
-          style={{ scale: logoScale, opacity: logoOpacity }}
-          initial={reduce ? undefined : { opacity: 0, scale: 0.85 }}
-          animate={reduce ? undefined : { opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        >            <div className="relative">
-            <Image
-            src="/images/zed-logo-main.png"
-            alt="Zed Studio"
-            width={260}
-            height={260}
-            className="h-auto w-auto max-h-[260px] rounded-full drop-shadow-[0_0_80px_rgba(95,132,100,0.2)]"
-            priority
-          />
-            </div>
-        </motion.div>
-
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Main headline */}
-          <motion.div
-            style={{ y: headingY, opacity: headingOpacity }}
-            className="lg:col-span-8"
-          >
-            {/* micro-scale-fade for label */}
-            <div className="mb-8">
-              <TextAnimate type="micro-scale-fade">
-                <span className="num-label mb-8 inline-block border border-white/15 bg-white/[0.04] px-5 py-2 backdrop-blur-sm">
-                  Web Development & Design Agency
-                </span>
-              </TextAnimate>
-            </div>
-
-            {/* soft-blur-in per-character for headline */}
-            <h1
-              className="font-display font-light leading-[0.95] tracking-tight text-white"
-              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+          className="flex items-center justify-between text-sm text-beige/70"
+          initial={reduce ? undefined : { opacity: 0 }}
+          animate={loaded && !reduce ? { opacity: 1 } : undefined}
+          transition={{ duration: 0.8, delay: 1 }}
+        >
+          <span>Pixel by pixel</span>
+          <span className="flex items-center gap-2">
+            Scroll
+            <motion.span
+              animate={reduce ? undefined : { y: [0, 4, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             >
-              <TextAnimate type="soft-blur-in" as="span" delay={0.3}>
-                We Build Websites
-              </TextAnimate>
-              <br className="hidden sm:block" />
-              <TextAnimate type="soft-blur-in" as="span" delay={0.7}>
-                & Digital Products{" "}
-                <span className="italic text-gold">That Convert.</span>
-              </TextAnimate>
-            </h1>
-          </motion.div>
-
-          {/* Right-side meta */}
-          <motion.div
-            style={{ y: metaY }}
-            className="lg:col-span-4 lg:flex lg:flex-col lg:justify-end lg:pl-8"
-          >
-            <Reveal delay={1.3}>
-              <p className="mb-8 text-[0.9375rem] leading-relaxed text-white/70 max-w-sm">
-                We design and develop high-performance websites, web apps,
-                and digital experiences. From brand identity to full-stack
-                development — we bring your vision to life.
-              </p>
-            </Reveal>
-
-            <Reveal delay={1.5}>
-              <div className="flex flex-wrap gap-4">
-                <a
-                  href="#work"
-                  className="btn-editorial bg-gold text-bg hover:bg-gold-hover"
-                >
-                  View Our Work
-                  <ArrowDownRight className="h-4 w-4" />
-                </a>
-                <a
-                  href="#contact"
-                  className="btn-editorial border border-white/25 text-white/90 hover:border-gold hover:text-gold"
-                >
-                  Book a Call
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={1.7}>
-              <div className="mt-12 border-t border-white/10 pt-6">
-                <TextAnimate type="micro-scale-fade" delay={1.9}>
-                  <span className="num-label">Based globally</span>
-                </TextAnimate>
-                <p className="mt-1 text-sm text-white/60">
-                  Available for projects worldwide
-                </p>
-              </div>
-            </Reveal>
-          </motion.div>
-        </div>
+              <ArrowDown className="h-4 w-4" />
+            </motion.span>
+          </span>
+        </motion.div>
       </div>
+
+      <StatCard className="right-10 top-36">Est. 2024 — worldwide</StatCard>
+      <StatCard className="bottom-44 right-24">13+ projects shipped</StatCard>
+      <StatCard className="bottom-24 right-10">
+        <ArrowDown className="h-5 w-5 text-gold" />
+      </StatCard>
     </section>
   );
 }

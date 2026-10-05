@@ -1,163 +1,91 @@
 "use client";
 
-import { ArrowUp, ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import Reveal from "./Reveal";
-import { useSmoothScroll } from "@/lib/use-smooth-scroll";
+import { ArrowUpRight } from "lucide-react";
+import { useSiteScroll } from "../lib/scroll";
 
-function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-    </svg>
-  );
-}
-
-function TikTokIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-    </svg>
-  );
-}
-
-const socialLinks = [
-  {
-    icon: <InstagramIcon className="h-4 w-4" />,
-    label: "Instagram",
-    href: "https://www.instagram.com/zedstudio0?igsi=OXZiM2wzamVlYzE4",
-  },
-  {
-    icon: <TikTokIcon className="h-4 w-4" />,
-    label: "TikTok",
-    href: "https://www.tiktok.com/@zed.studio3?is_from_webapp=1&sender_device=pc",
-  },
+const LINKS = [
+  { label: "Work", target: "#projects" },
+  { label: "Services", target: "#services" },
+  { label: "Studio", target: "#about" },
+  { label: "Contact", target: "#contact" },
 ];
 
-const navLinks = [
-  { label: "Home", href: "#top" },
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+const SOCIALS = [
+  { label: "Instagram", href: "https://www.instagram.com/zedstudio0" },
+  { label: "TikTok", href: "https://www.tiktok.com/@zed.studio3" },
 ];
 
 export default function Footer() {
-  const reduce = useReducedMotion();
-  const scrollTo = useSmoothScroll();
+  const { scrollTo } = useSiteScroll();
 
   return (
-    <footer className="border-t border-border bg-bg">
-      {/* CTA Section */}
-      <div className="section-py">
-        <div className="section-container text-center">
-          <Reveal>
-            <h2
-              className="font-display font-light tracking-tight text-text"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}
-            >
-              Ready to elevate
-              <br />
-              <span className="italic text-gold">your brand?</span>
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <div className="mt-10">
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo("#contact");
-                }}
-                className="btn-editorial bg-gold text-bg hover:bg-gold-hover"
-              >
-                Let&apos;s Talk
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-
-      {/* Footer Bottom */}
-      <div className="border-t border-border py-10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 px-6 sm:flex-row sm:px-10">
-          {/* Logo + Copyright */}
-          <div className="flex flex-col items-center gap-4 sm:items-start">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/zed-logo-main.png"
-                alt="Zed Studio"
-                width={32}
-                height={32}
-                className="h-8 w-auto rounded-full"
-              />
-              <span className="font-display text-lg font-semibold tracking-tight text-text">
-                Zed Studio
-              </span>
-            </div>
-            <p className="font-mono text-[10px] text-text-muted">
-              © {new Date().getFullYear()} Zed Studio · All rights reserved.
-            </p>
+    <footer className="relative overflow-hidden px-6 pt-24 md:px-10">
+      <div className="flex flex-col gap-16 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-8">
+          <div className="relative h-14 w-14 overflow-hidden rounded-lg">
+            <Image
+              src="/images/zed-logo.webp"
+              alt="Zed Studio"
+              fill
+              sizes="56px"
+              className="object-cover"
+            />
           </div>
-
-          {/* Nav Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo(link.href);
-                }}
-                className="font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-text-muted transition-colors duration-300 hover:text-gold"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Social + Back to top */}
-          <div className="flex flex-col items-center gap-4 sm:items-end">
-            <div className="flex items-center gap-4">
-              {socialLinks.map((link) => (
+          <div className="flex flex-col gap-2 text-sm text-beige/70">
+            <a
+              href="mailto:zedcode1@yahoo.com"
+              className="w-fit transition-colors hover:text-beige"
+            >
+              zedcode1@yahoo.com
+            </a>
+            <div className="flex gap-5">
+              {SOCIALS.map((s) => (
                 <a
-                  key={link.label}
-                  href={link.href}
+                  key={s.label}
+                  href={s.href}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center border border-border text-text-muted transition-all duration-300 hover:border-gold hover:text-gold"
-                  aria-label={link.label}
+                  rel="noreferrer"
+                  className="flex items-center gap-1 transition-colors hover:text-beige"
                 >
-                  {link.icon}
+                  {s.label}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               ))}
             </div>
-            <a
-              href="#top"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo("#top");
-              }}
-              className="group flex items-center gap-2 border border-border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-text-muted transition-colors duration-300 hover:border-gold hover:text-gold"
-            >
-              Back to top
-              <ArrowUp className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5" />
-            </a>
           </div>
         </div>
+
+        <nav className="flex flex-col items-start gap-3 md:items-end">
+          {LINKS.map((l) => (
+            <button
+              key={l.label}
+              onClick={() => scrollTo(l.target)}
+              className="text-sm font-semibold text-beige/70 transition-colors hover:text-beige"
+            >
+              {l.label}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      <div className="mt-16 flex items-center justify-between border-t border-line pt-6 text-xs text-beige/50">
+        <span>© {new Date().getFullYear()} Zed Studio</span>
+        <button
+          onClick={() => scrollTo("#top")}
+          className="transition-colors hover:text-beige"
+        >
+          Back to top ↑
+        </button>
+      </div>
+
+      <div
+        aria-hidden
+        className="pointer-events-none mt-10 flex h-[18vw] select-none items-start justify-center overflow-hidden"
+      >
+        <span className="whitespace-nowrap text-[22vw] font-semibold leading-[0.8] tracking-[-0.04em] text-beige/10">
+          ZED STUDIO
+        </span>
       </div>
     </footer>
   );

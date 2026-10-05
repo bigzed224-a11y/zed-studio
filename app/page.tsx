@@ -1,46 +1,35 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
-import Work from "@/components/Work";
-import Services from "@/components/Services";
-import WhyZed from "@/components/WhyZed";
+import Cursor from "@/components/Cursor";
+import FloatingNav from "@/components/FloatingNav";
+import { SmoothScrollProvider } from "@/lib/scroll";
 import About from "@/components/About";
+import CharReveal from "@/components/CharReveal";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import PageLoader from "@/components/PageLoader";
-import ScrollProgress from "@/components/ScrollProgress";
-
-const marqueeItems = [
-  "Web Development",
-  "Web Applications",
-  "React & Next.js",
-  "Brand Identity",
-  "UI/UX Design",
-  "Responsive Design",
-  "Full-Stack Dev",
-  "Digital Products",
-];
+import Hero from "@/components/Hero";
+import Manifesto from "@/components/Manifesto";
+import Preloader from "@/components/Preloader";
+import Projects from "@/components/Projects";
+import Services from "@/components/Services";
+import Ticker from "@/components/Ticker";
+import TopBar from "@/components/TopBar";
 
 export default function Home() {
   return (
-    <PageLoader>
-      <ScrollProgress />
-      <main>
-        <Nav />
+    <SmoothScrollProvider>
+      <Preloader />
+      <Cursor />
+      <TopBar />
+      <main id="top" className="relative">
         <Hero />
-        <Marquee items={marqueeItems} />
-        <div className="section-divider" />
-        <Work />
-        <div className="section-divider" />
+        <Ticker />
+        <Manifesto />
+        <Projects />
         <Services />
-        <div className="section-divider" />
-        <WhyZed />
-        <div className="section-divider" />
         <About />
-        <div className="section-divider" />
         <Contact />
         <Footer />
       </main>
-    </PageLoader>
+      <FloatingNav />
+    </SmoothScrollProvider>
   );
 }
