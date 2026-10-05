@@ -11,6 +11,7 @@ import ParallaxStrip from "@/components/ParallaxStrip";
 import Preloader from "@/components/Preloader";
 import Projects from "@/components/Projects";
 import Services from "@/components/Services";
+import Testimonials from "@/components/Testimonials";
 import Ticker from "@/components/Ticker";
 import TopBar from "@/components/TopBar";
 
@@ -35,6 +36,7 @@ export default function Home() {
           height="60vh"
         />
         <Services />
+        <Testimonials />
         <About />
         <Contact />
         <Footer />
