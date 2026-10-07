@@ -17,15 +17,34 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Zed Studio — Websites & Digital Products",
+  title: "Zed Studio — Websites, Branding & Digital Products",
   description:
-    "Zed Studio designs and builds websites, brand identities and digital products that convert, simplify, and scale. Logo design, art covers, print, web development.",
+    "Zed Studio designs and builds fast, modern websites, brand identities, logos, art covers, flyers, and digital products that help businesses convert and stand out.",
+  keywords: [
+    "zed studio",
+    "web design agency",
+    "website development",
+    "branding agency",
+    "logo design",
+    "graphic design",
+    "digital agency",
+    "creative agency",
+    "ui ux design",
+    "web agency",
+  ],
   icons: { icon: "/images/zed-logo-main.png" },
   openGraph: {
-    title: "Zed Studio — Websites & Digital Products",
+    title: "Zed Studio — Websites, Branding & Digital Products",
     description:
-      "Websites, brand identities and digital products that convert, simplify, and scale.",
+      "Fast, modern websites and brand identities that convert, simplify, and scale.",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Zed Studio — Websites, Branding & Digital Products",
+    description:
+      "Fast, modern websites and brand identities that convert, simplify, and scale.",
   },
 };
 

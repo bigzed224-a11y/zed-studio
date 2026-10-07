@@ -56,8 +56,8 @@ export const PROJECTS: Project[] = [
     alt: "Screen recording of a bold purple agency homepage with oversized typography.",
     feature: {
       phase: [0.0, 0.2],
-      from: { x: -52, y: -16, z: -900, r: -10, s: 0.72 },
-      to: { x: 40, y: 12, z: 320, r: 5, s: 1.12 },
+      from: { x: -30, y: -10, z: -900, r: -10, s: 0.72 },
+      to: { x: 28, y: 8, z: 320, r: 5, s: 1.12 },
     },
   },
   {
@@ -72,8 +72,8 @@ export const PROJECTS: Project[] = [
     alt: "Book cover titled The Other Side: a keyhole opening onto a sunrise landscape.",
     feature: {
       phase: [0.09, 0.3],
-      from: { x: 56, y: 18, z: -1100, r: 9, s: 0.68 },
-      to: { x: -44, y: -10, z: 280, r: -6, s: 1.08 },
+      from: { x: 31, y: 12, z: -1100, r: 9, s: 0.68 },
+      to: { x: -29, y: -8, z: 280, r: -6, s: 1.08 },
     },
   },
   {
@@ -89,8 +89,8 @@ export const PROJECTS: Project[] = [
     alt: "Screen recording of a cream-and-red agriculture site with a rotating badge.",
     feature: {
       phase: [0.18, 0.39],
-      from: { x: -42, y: 22, z: -800, r: -7, s: 0.78 },
-      to: { x: 38, y: -14, z: 340, r: 4, s: 1.14 },
+      from: { x: -28, y: 14, z: -800, r: -7, s: 0.78 },
+      to: { x: 27, y: -10, z: 340, r: 4, s: 1.14 },
     },
   },
   {
@@ -105,8 +105,8 @@ export const PROJECTS: Project[] = [
     alt: "Gold-and-black floral save-the-date card for Hassan and Swaba.",
     feature: {
       phase: [0.28, 0.49],
-      from: { x: 48, y: -18, z: -1000, r: 11, s: 0.7 },
-      to: { x: -36, y: 14, z: 300, r: -5, s: 1.1 },
+      from: { x: 29, y: -12, z: -1000, r: 11, s: 0.7 },
+      to: { x: -26, y: 10, z: 300, r: -5, s: 1.1 },
     },
   },
   {
@@ -122,8 +122,8 @@ export const PROJECTS: Project[] = [
     alt: "Screen recording of a dark portfolio site with an orange gradient gallery.",
     feature: {
       phase: [0.38, 0.59],
-      from: { x: -50, y: 18, z: -850, r: -9, s: 0.74 },
-      to: { x: 42, y: -12, z: 360, r: 6, s: 1.16 },
+      from: { x: -30, y: 12, z: -850, r: -9, s: 0.74 },
+      to: { x: 29, y: -9, z: 360, r: 6, s: 1.16 },
     },
   },
   {
@@ -139,8 +139,8 @@ export const PROJECTS: Project[] = [
     alt: "Animated golden moth emblem reveal for De Golden Mother.",
     feature: {
       phase: [0.48, 0.69],
-      from: { x: 54, y: -16, z: -1050, r: 10, s: 0.7 },
-      to: { x: -40, y: 10, z: 320, r: -4, s: 1.1 },
+      from: { x: 30, y: -11, z: -1050, r: 10, s: 0.7 },
+      to: { x: -28, y: 8, z: 320, r: -4, s: 1.1 },
     },
   },
   {
@@ -156,8 +156,8 @@ export const PROJECTS: Project[] = [
     alt: "Screen recording of a dark Edolus satellite-tech landing page.",
     feature: {
       phase: [0.58, 0.79],
-      from: { x: -46, y: 14, z: -900, r: -8, s: 0.72 },
-      to: { x: 40, y: -10, z: 340, r: 5, s: 1.14 },
+      from: { x: -29, y: 10, z: -900, r: -8, s: 0.72 },
+      to: { x: 28, y: -8, z: 340, r: 5, s: 1.14 },
     },
   },
   {
@@ -173,8 +173,8 @@ export const PROJECTS: Project[] = [
     alt: "Animated burger delivery social post with phone mockup.",
     feature: {
       phase: [0.68, 0.89],
-      from: { x: 50, y: 18, z: -950, r: 9, s: 0.7 },
-      to: { x: -38, y: -12, z: 300, r: -6, s: 1.1 },
+      from: { x: 30, y: 12, z: -950, r: 9, s: 0.7 },
+      to: { x: -27, y: -9, z: 300, r: -6, s: 1.1 },
     },
   },
   {
@@ -189,8 +189,8 @@ export const PROJECTS: Project[] = [
     alt: "Dark editorial poster: Luna Vexx, portrait in a red jacket.",
     feature: {
       phase: [0.78, 0.96],
-      from: { x: -48, y: -14, z: -880, r: -9, s: 0.72 },
-      to: { x: 42, y: 10, z: 340, r: 4, s: 1.12 },
+      from: { x: -30, y: -10, z: -880, r: -9, s: 0.72 },
+      to: { x: 29, y: 8, z: 340, r: 4, s: 1.12 },
     },
   },
 

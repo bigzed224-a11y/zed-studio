@@ -89,8 +89,8 @@ export default function Hero() {
 
       <div className="absolute inset-0 flex flex-col justify-between px-6 pb-8 pt-28 md:px-10 md:pt-32">
         <h1
-          className="font-bold uppercase leading-[0.9] tracking-[-0.03em] text-beige"
-          style={{ fontSize: "clamp(3.2rem, 10.5vw, 12rem)" }}
+          className="font-bold uppercase leading-[0.9] tracking-[-0.03em] text-beige max-w-full"
+          style={{ fontSize: "clamp(3.2rem, 10.5vw, 12rem)", overflowWrap: 'break-word', wordBreak: 'break-word' }}
         >
           <span className="block">
             <Word text="Websites" delay={0.05} />
