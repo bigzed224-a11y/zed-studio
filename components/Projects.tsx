@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import MaskRise from "./MaskRise";
-import { useSiteScroll } from "../lib/scroll";
+import WorksShowcase from "./WorksShowcase";
 
 const GRID_ROWS: { src: string; alt: string; className: string }[][] = [
   [
@@ -102,68 +101,6 @@ function GridImage({
   );
 }
 
-function CaseCard({
-  project,
-  index,
-  isLast,
-}: {
-  project: (typeof FEATURED)[number];
-  index: number;
-  isLast: boolean;
-}) {
-  const { scrollTo } = useSiteScroll();
-  const nextHref = isLast ? "#contact" : `#case-${FEATURED[index + 1].slug}`;
-
-  return (
-    <div
-      id={`case-${project.slug}`}
-      className="sticky top-4 h-[calc(100svh-2rem)] min-h-[560px] px-4 md:px-10"
-      style={{ zIndex: index + 1 }}
-    >
-      <div className="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-ink-2 md:flex-row">
-        <div className="relative h-[42%] w-full shrink-0 md:h-full md:w-[54%]">
-          <Image
-            src={project.cover}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 54vw"
-            className="object-cover"
-            priority={index === 0}
-          />
-        </div>
-        <div className="flex flex-1 flex-col justify-between gap-6 p-6 md:p-10">
-          <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
-            [ 0{index + 1} / 0{FEATURED.length} ]
-          </span>
-          <div>
-            <p className="text-6xl font-semibold leading-none text-beige/50 md:text-7xl">
-              {index + 1}
-            </p>
-            <h3 className="mt-6 max-w-md text-2xl font-medium leading-snug text-beige md:text-3xl">
-              {project.title}
-            </h3>
-            <p className="mt-4 text-sm text-beige/70">
-              {project.category} — {project.client}, {project.year}
-            </p>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-xs uppercase tracking-[0.08em] text-beige/60">
-              {project.category}
-            </span>
-            <button
-              onClick={() => scrollTo(nextHref)}
-              className="group flex items-center gap-2 text-sm font-medium text-beige/80 transition-colors hover:text-beige"
-            >
-              {isLast ? "Start yours" : "Next project"}
-              <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Projects() {
   return (
     <section id="projects" className="pt-10 md:pt-20">
@@ -198,16 +135,17 @@ export default function Projects() {
       </div>
 
       <div className="mt-16 md:mt-24">
-        {FEATURED.map((project, i) => (
-          <CaseCard
+        {FEATURED.map((project) => (
+          <div
             key={project.slug}
-            project={project}
-            index={i}
-            isLast={i === FEATURED.length - 1}
+            id={`case-${project.slug}`}
+            className="h-px scroll-mt-24"
+            aria-hidden
           />
         ))}
-        <div className="h-16 md:h-24" />
       </div>
+
+      <WorksShowcase />
     </section>
   );
 }
