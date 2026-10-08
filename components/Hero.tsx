@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import type { ReactNode } from "react";
-import { useLoaded, useReducedMotionSafe } from "../lib/scroll";
+import { useIsMobile, useLoaded, useReducedMotionSafe } from "../lib/scroll";
 
 const EASE: [number, number, number, number] = [0.44, 0, 0.56, 1];
 
@@ -32,7 +32,11 @@ function Word({
           className="inline-block will-change-transform"
           initial={reduce ? { y: 0 } : { y: "115%" }}
           animate={loaded ? { y: 0 } : reduce ? { y: 0 } : { y: "115%" }}
-          transition={{ duration: 0.9, delay: delay + i * 0.03, ease: EASE }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { duration: 0.9, delay: delay + i * 0.03, ease: EASE }
+          }
         >
           {char === " " ? "\u00A0" : char}
         </motion.span>
@@ -54,9 +58,13 @@ function StatCard({
   return (
     <motion.div
       className={`absolute hidden w-[124px] rounded-md border border-line bg-ink-2/85 p-4 text-xs font-bold uppercase leading-snug text-beige/80 backdrop-blur lg:block ${className}`}
-      initial={reduce ? undefined : { opacity: 0, y: -24 }}
-      animate={loaded && !reduce ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.9, delay: 0.7, ease: EASE }}
+      initial={false}
+      animate={
+        reduce || loaded ? { opacity: 1, y: 0 } : { opacity: 0, y: -24 }
+      }
+      transition={
+        reduce ? { duration: 0 } : { duration: 0.9, delay: 0.7, ease: EASE }
+      }
     >
       {children}
     </motion.div>
@@ -66,6 +74,7 @@ function StatCard({
 export default function Hero() {
   const loaded = useLoaded();
   const reduce = useReducedMotionSafe();
+  const mobile = useIsMobile();
 
   return (
     <section className="relative h-[100svh] min-h-[620px] overflow-hidden">
@@ -89,10 +98,14 @@ export default function Hero() {
         className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent"
       />
 
-      <div className="absolute inset-0 flex flex-col justify-between px-6 pb-8 pt-28 md:px-10 md:pt-32">
+      {/* pb-24 clears the rotated ticker's raised corner (~72px at 1920px)
+          and the floating nav pill. On short mobile screens the hero's min-height
+          exceeds the viewport, so the bottom row would land inside the nav band —
+          push it further up there. */}
+      <div className="absolute inset-0 flex flex-col justify-between px-6 pb-24 pt-28 [@media(max-height:640px)_and_(max-width:767px)]:pb-40 md:px-10 md:pt-32">
         <h1
           className="font-bold uppercase leading-[0.9] tracking-[-0.03em] text-beige max-w-full"
-          style={{ fontSize: "clamp(3.2rem, 10.5vw, 12rem)", overflowWrap: 'break-word', wordBreak: 'break-word' }}
+          style={{ fontSize: "clamp(3.2rem, 10.5vw, 12rem)", overflowWrap: 'anywhere', wordBreak: 'normal' }}
         >
           <span className="block">
             <Word text="Websites" delay={0.05} />
@@ -108,9 +121,15 @@ export default function Hero() {
 
         <motion.p
           className="max-w-[300px] text-base leading-relaxed text-beige/80 md:ml-[22%] md:text-lg"
-          initial={reduce ? undefined : { opacity: 0, y: 24 }}
-          animate={loaded && !reduce ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.8, delay: 0.6, ease: EASE }}
+          initial={false}
+          animate={
+            reduce || loaded
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: mobile ? 12 : 24 }
+          }
+          transition={
+            reduce ? { duration: 0 } : { duration: 0.8, delay: 0.6, ease: EASE }
+          }
         >
           Hey — we&apos;re Zed Studio. We design and build websites and digital
           products that convert, simplify, and scale.
@@ -118,9 +137,11 @@ export default function Hero() {
 
         <motion.div
           className="flex items-center justify-between text-sm text-beige/70"
-          initial={reduce ? undefined : { opacity: 0 }}
-          animate={loaded && !reduce ? { opacity: 1 } : undefined}
-          transition={{ duration: 0.8, delay: 1 }}
+          initial={false}
+          animate={reduce || loaded ? { opacity: 1 } : { opacity: 0 }}
+          transition={
+            reduce ? { duration: 0 } : { duration: 0.8, delay: 1 }
+          }
         >
           <span>Pixel by pixel</span>
           <span className="flex items-center gap-2">
@@ -137,7 +158,9 @@ export default function Hero() {
 
       <StatCard className="right-10 top-36">Est. 2024 — worldwide</StatCard>
       <StatCard className="bottom-44 right-24">13+ projects shipped</StatCard>
-      <StatCard className="bottom-24 right-10">
+      {/* bottom-64 keeps this card clear of the pb-24 bottom row (Scroll /
+          Pixel by pixel) so it never sits on top of that text */}
+      <StatCard className="bottom-64 right-10">
         <ArrowDown className="h-5 w-5 text-gold" />
       </StatCard>
     </section>

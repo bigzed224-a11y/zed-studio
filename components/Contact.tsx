@@ -1,10 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import { useState, type FormEvent } from "react";
-import { useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
+import { useRef, useState, type FormEvent } from "react";
+import {
+  useIsMobile,
+  useReducedMotionSafe,
+  useSiteScroll,
+} from "../lib/scroll";
 
 const FLOATERS = [
   {
@@ -34,6 +38,9 @@ type Status = "idle" | "sending" | "success" | "error";
 export default function Contact() {
   const { scrollTo } = useSiteScroll();
   const reduce = useReducedMotionSafe();
+  const mobile = useIsMobile();
+  const kickerRef = useRef<HTMLSpanElement>(null);
+  const kickerInView = useInView(kickerRef, { once: true, amount: 0.5 });
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -80,10 +87,14 @@ export default function Contact() {
 
       <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
         <motion.span
-          initial={reduce ? undefined : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          ref={kickerRef}
+          initial={false}
+          animate={
+            reduce || kickerInView
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: mobile ? 8 : 16 }
+          }
+          transition={reduce ? { duration: 0 } : { duration: 0.6 }}
           className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70"
         >
           [ Start a project ]
@@ -97,7 +108,7 @@ export default function Contact() {
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
-            href="mailto:zedcode1@yahoo.com"
+            href="mailto:bigzed224@gmail.com"
             className="flex items-center gap-2 rounded bg-beige px-6 py-4 text-xs font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.03]"
           >
             Let&apos;s talk
@@ -169,7 +180,7 @@ export default function Contact() {
             )}
             {status === "error" && (
               <p className="text-sm text-beige/70">
-                Something went wrong — email us directly at zedcode1@yahoo.com.
+                Something went wrong — email us directly at bigzed224@gmail.com.
               </p>
             )}
           </div>

@@ -27,10 +27,10 @@ export default function TopBar() {
         </span>
       </button>
       <a
-        href="mailto:zedcode1@yahoo.com"
+        href="mailto:bigzed224@gmail.com"
         className="hidden text-sm text-beige/70 transition-colors hover:text-beige md:block"
       >
-        zedcode1@yahoo.com
+        bigzed224@gmail.com
       </a>
     </header>
   );

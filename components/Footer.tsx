@@ -34,10 +34,10 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-2 text-sm text-beige/70">
             <a
-              href="mailto:zedcode1@yahoo.com"
-              className="w-fit transition-colors hover:text-beige"
+              href="mailto:bigzed224@gmail.com"
+              className="w-fit break-all transition-colors hover:text-beige"
             >
-              zedcode1@yahoo.com
+              bigzed224@gmail.com
             </a>
             <div className="flex gap-5">
               {SOCIALS.map((s) => (
@@ -79,13 +79,8 @@ export default function Footer() {
         </button>
       </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none mt-10 flex h-[18vw] select-none items-start justify-center overflow-hidden"
-      >
-        <span className="whitespace-nowrap text-[22vw] font-semibold leading-[0.8] tracking-[-0.04em] text-beige/10">
-          ZED STUDIO
-        </span>
+      <div aria-hidden className="footer-wordmark pointer-events-none mt-10 select-none">
+        <span className="font-semibold text-beige/10">ZED STUDIO</span>
       </div>
     </footer>
   );

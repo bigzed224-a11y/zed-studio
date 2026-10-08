@@ -46,23 +46,31 @@ export default function About() {
         </div>
 
         <div className="flex flex-col gap-10 md:col-span-4">
-          <p className="text-lg leading-relaxed text-beige/80">
-            Zed Studio started with one goal: make brands impossible to ignore.
-            Today we design logos, covers, print and full websites for clients
-            worldwide.
-          </p>
-          <p className="text-lg leading-relaxed text-beige/80">
-            From the first sketch to the shipped product, everything is crafted
-            in-house — pixel by pixel.
-          </p>
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
-              [ What we do best ]
+              [ What we are ]
             </span>
-            <p className="mt-4 text-sm leading-relaxed text-beige/70">
-              Web Development, UI/UX, Brand Identity, Logo Design, Art Covers,
-              Print, Social Content — React, Next.js, TypeScript, Tailwind,
-              Node.js, Figma.
+            <p className="mt-4 text-lg leading-relaxed text-beige/80">
+              A creative digital studio combining design and development.
+            </p>
+          </div>
+          <div>
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+              [ What we do ]
+            </span>
+            <p className="mt-4 text-lg leading-relaxed text-beige/80">
+              Websites, digital products, branding, motion and visual
+              experiences — logos, art covers and print for clients worldwide.
+            </p>
+          </div>
+          <div>
+            <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
+              [ Why us ]
+            </span>
+            <p className="mt-4 text-lg leading-relaxed text-beige/80">
+              Thoughtful design, strong technology and purposeful digital
+              experiences — from the first sketch to the shipped product,
+              crafted in-house, pixel by pixel.
             </p>
           </div>
         </div>

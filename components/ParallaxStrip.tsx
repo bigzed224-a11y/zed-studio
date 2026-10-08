@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useReducedMotionSafe } from "../lib/scroll";
+import { useIsMobile, useReducedMotionSafe } from "../lib/scroll";
 import { useRef } from "react";
 
 export default function ParallaxStrip({
@@ -16,11 +16,19 @@ export default function ParallaxStrip({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotionSafe();
+  const mobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["-12%", "12%"]);
+  // ±12% drift on desktop, halved below 768px; zero under reduced motion.
+  // `mobile` flips in an effect (post-hydration), and the transform closure
+  // is refreshed on every render — so SSR and first client render agree.
+  const y = useTransform(scrollYProgress, (v) => {
+    if (reduce) return "0%";
+    const k = mobile ? 0.5 : 1;
+    return `${(-12 + 24 * v) * k}%`;
+  });
 
   return (
     <div

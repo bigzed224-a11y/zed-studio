@@ -1,10 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import MaskRise from "./MaskRise";
 import WorksShowcase from "./WorksShowcase";
-import { useReducedMotionSafe } from "../lib/scroll";
+import { useRef } from "react";
+import { useIsMobile, useReducedMotionSafe } from "../lib/scroll";
 
 const GRID_ROWS: { src: string; alt: string; className: string }[][] = [
   [
@@ -82,13 +83,22 @@ function GridImage({
   className: string;
 }) {
   const reduce = useReducedMotionSafe();
+  const mobile = useIsMobile();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  const show = reduce || inView;
+  const rise = mobile ? 18 : 40;
 
   return (
     <motion.div
-      initial={reduce ? undefined : { opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      ref={ref}
+      initial={false}
+      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: rise }}
+      transition={
+        reduce
+          ? { duration: 0 }
+          : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      }
       className={`group relative aspect-square overflow-hidden rounded-md ${className}`}
     >
       <Image

@@ -1,73 +1,67 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useReducedMotionSafe } from "../lib/scroll";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { useIsMobile, useReducedMotionSafe } from "../lib/scroll";
 
-const QUOTES = [
-  {
-    quote:
-      "Placeholder — swap with real client feedback about the process and communication.",
-    name: "Client Name",
-    project: "Project type · Year",
-  },
-  {
-    quote:
-      "Placeholder — swap with real client feedback about the result and how it performed.",
-    name: "Client Name",
-    project: "Project type · Year",
-  },
-  {
-    quote:
-      "Placeholder — swap with real client feedback about working together again.",
-    name: "Client Name",
-    project: "Project type · Year",
-  },
-];
-
+/**
+ * Credibility statement — not a testimonial carousel.
+ *
+ * The studio has no real client quotes yet, so instead of placeholder quotes
+ * (never ship those) this section states where the studio stands. Swap in
+ * real, verbatim feedback when it exists.
+ */
 export default function Testimonials() {
   const reduce = useReducedMotionSafe();
+  const mobile = useIsMobile();
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+
+  const show = reduce || inView;
+  const rise = mobile ? 14 : 28;
+  const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
   return (
-    <section className="px-6 py-28 md:px-10 md:py-40">
-      <div className="flex items-end justify-between">
-        <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70">
-          [ What clients say ]
-        </span>
-        <span className="hidden text-xs text-beige/60 md:block">
-          Replace with real feedback
-        </span>
-      </div>
+    <section
+      ref={ref}
+      aria-label="Studio statement"
+      className="px-6 py-28 md:px-10 md:py-40"
+    >
+      <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/70">
+        [ What clients say ]
+      </span>
 
-      <div className="mt-14 grid gap-6 md:mt-20 md:grid-cols-3">
-        {QUOTES.map((item, i) => (
-          <motion.figure
-            key={i}
-            initial={reduce ? undefined : { opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{
-              duration: 0.7,
-              delay: i * 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="flex flex-col justify-between gap-10 rounded-md border border-line bg-ink-2 p-8 md:p-10"
-          >
-            <div>
-              <span aria-hidden className="text-4xl font-semibold leading-none text-gold">
-                &ldquo;
-              </span>
-              <blockquote className="mt-4 text-lg leading-relaxed text-beige/90">
-                {item.quote}
-              </blockquote>
-            </div>
-            <figcaption>
-              <p className="text-sm font-semibold text-beige">{item.name}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.08em] text-beige/60">
-                {item.project}
-              </p>
-            </figcaption>
-          </motion.figure>
-        ))}
+      <div className="mt-12 grid gap-8 md:mt-20 md:grid-cols-12 md:gap-10">
+        <motion.h2
+          initial={false}
+          animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: rise }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { duration: 0.8, ease, delay: mobile ? 0 : 0.05 }
+          }
+          className="text-[clamp(2rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-beige md:col-span-7"
+        >
+          Good work speaks through the experience.
+        </motion.h2>
+
+        <motion.p
+          initial={false}
+          animate={
+            show
+              ? { opacity: 1, y: 0 }
+              : { opacity: 0, y: Math.round(rise / 2) }
+          }
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { duration: 0.8, delay: mobile ? 0.08 : 0.18, ease }
+          }
+          className="text-base leading-relaxed text-beige/70 md:col-span-5 md:self-end md:text-lg"
+        >
+          We&rsquo;re building a studio focused on thoughtful design, strong
+          technology, and digital experiences people remember.
+        </motion.p>
       </div>
     </section>
   );

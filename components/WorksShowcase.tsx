@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
+import { useIsMobile, useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
 
 /* ================================================================== */
 /* PROJECT DATA — the single place to edit portfolio content.          */
@@ -522,6 +522,11 @@ function WorkCard({
 }) {
   const feat = project.feature!;
   const [enter, exit] = feat.phase;
+  // Reduced travel below 768px (spec §10): translation distances shrink but
+  // phases, rotation and scale — the 3D character — stay identical to the
+  // desktop choreography. The flag flips in a post-hydration effect and the
+  // transform closures are refreshed every render, so SSR output is stable.
+  const mobile = useIsMobile();
   const local = useTransform(
     progress,
     [enter, enter + 0.05, exit - 0.06, exit],
@@ -530,18 +535,18 @@ function WorkCard({
   );
   const localClamped = useTransform(local, (v) => Math.min(v, 1));
 
-  const x = useTransform(
-    localClamped,
-    (v) => `${feat.from.x + (feat.to.x - feat.from.x) * v}vw`,
-  );
-  const y = useTransform(
-    localClamped,
-    (v) => `${feat.from.y + (feat.to.y - feat.from.y) * v}vh`,
-  );
-  const z = useTransform(
-    localClamped,
-    (v) => `${feat.from.z + (feat.to.z - feat.from.z) * v}px`,
-  );
+  const x = useTransform(localClamped, (v) => {
+    const k = mobile ? 0.5 : 1;
+    return `${(feat.from.x + (feat.to.x - feat.from.x) * v) * k}vw`;
+  });
+  const y = useTransform(localClamped, (v) => {
+    const k = mobile ? 0.5 : 1;
+    return `${(feat.from.y + (feat.to.y - feat.from.y) * v) * k}vh`;
+  });
+  const z = useTransform(localClamped, (v) => {
+    const k = mobile ? 0.5 : 1;
+    return `${(feat.from.z + (feat.to.z - feat.from.z) * v) * k}px`;
+  });
   const rotate = useTransform(
     localClamped,
     (v) => `${feat.from.r + (feat.to.r - feat.from.r) * v}deg`,

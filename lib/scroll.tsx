@@ -89,3 +89,25 @@ export function useReducedMotionSafe(): boolean {
 
   return reduce;
 }
+
+/**
+ * Hydration-safe "below 768px" query.
+ *
+ * Same pattern as useReducedMotionSafe: SSR and the first client render both
+ * report false (so the markup matches), then the real media query is applied
+ * after mount. Use it to pick smaller entrance distances for mobile — never
+ * to hide/show layout (CSS breakpoints own layout).
+ */
+export function useIsMobile(): boolean {
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return mobile;
+}
