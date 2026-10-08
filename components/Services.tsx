@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useReducedMotionSafe } from "../lib/scroll";
 
 const SERVICES = [
   {
@@ -31,7 +32,7 @@ const SERVICES = [
 ];
 
 export default function Services() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <section id="services" className="px-6 py-28 md:px-10 md:py-40">

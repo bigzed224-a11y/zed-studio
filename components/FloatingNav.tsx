@@ -22,14 +22,14 @@ export default function FloatingNav() {
           <button
             key={link.href}
             onClick={() => scrollTo(link.href)}
-            className="rounded px-3 py-3 text-[11px] font-semibold uppercase tracking-wide text-beige/80 transition-colors hover:text-beige md:px-4 md:text-xs"
+            className="rounded px-2 py-3 text-[11px] font-semibold uppercase tracking-wide text-beige/80 transition-colors hover:text-beige min-[420px]:px-3 md:px-4 md:text-xs"
           >
             {link.label}
           </button>
         ))}
         <button
           onClick={() => scrollTo("#contact")}
-          className="ml-1 flex items-center gap-2 whitespace-nowrap rounded bg-beige px-4 py-3 text-[11px] font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.04] md:px-5 md:text-xs"
+          className="ml-1 flex items-center gap-2 whitespace-nowrap rounded bg-beige px-3 py-3 text-[11px] font-extrabold uppercase tracking-wide text-ink transition-transform duration-200 hover:scale-[1.04] min-[420px]:px-4 md:px-5 md:text-xs"
         >
           Let&apos;s talk
           <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />

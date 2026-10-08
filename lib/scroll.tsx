@@ -1,6 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
+import { useReducedMotion } from "framer-motion";
 import {
   createContext,
   useContext,
@@ -68,4 +69,23 @@ export function useLoaded() {
 
 export function useLoadedSetter() {
   return useContext(LoadedSetterContext);
+}
+
+/**
+ * Hydration-safe reduced-motion preference.
+ *
+ * framer's `useReducedMotion()` reports the OS preference immediately on the
+ * client, but SSR cannot know it — so the first client render mismatches the
+ * server HTML and React hydration fails. This wrapper always renders the
+ * server value (false) first, then applies the real preference after mount.
+ */
+export function useReducedMotionSafe(): boolean {
+  const pref = useReducedMotion();
+  const [reduce, setReduce] = useState(false);
+
+  useEffect(() => {
+    setReduce(!!pref);
+  }, [pref]);
+
+  return reduce;
 }

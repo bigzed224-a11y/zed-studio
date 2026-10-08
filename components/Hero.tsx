@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import type { ReactNode } from "react";
-import { useLoaded } from "../lib/scroll";
+import { useLoaded, useReducedMotionSafe } from "../lib/scroll";
 
 const EASE: [number, number, number, number] = [0.44, 0, 0.56, 1];
 
@@ -17,7 +17,7 @@ function Word({
   className?: string;
 }) {
   const loaded = useLoaded();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const chars = Array.from(text);
 
   return (
@@ -49,7 +49,7 @@ function StatCard({
   className?: string;
 }) {
   const loaded = useLoaded();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <motion.div
@@ -65,7 +65,7 @@ function StatCard({
 
 export default function Hero() {
   const loaded = useLoaded();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <section className="relative h-[100svh] min-h-[620px] overflow-hidden">
@@ -74,6 +74,8 @@ export default function Hero() {
         muted
         loop
         playsInline
+        preload="metadata"
+        poster="/images/hero-poster.jpg"
         aria-hidden
         src="/video-bg.mp4"
         className="absolute inset-0 h-full w-full object-cover opacity-30"

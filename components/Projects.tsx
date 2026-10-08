@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import MaskRise from "./MaskRise";
 import WorksShowcase from "./WorksShowcase";
+import { useReducedMotionSafe } from "../lib/scroll";
 
 const GRID_ROWS: { src: string; alt: string; className: string }[][] = [
   [
@@ -80,7 +81,7 @@ function GridImage({
   alt: string;
   className: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <motion.div

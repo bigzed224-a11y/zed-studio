@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useReducedMotionSafe } from "../lib/scroll";
 
 export default function MaskRise({
   text,
@@ -11,7 +12,7 @@ export default function MaskRise({
   className?: string;
   delay?: number;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const chars = Array.from(text);
 
   return (

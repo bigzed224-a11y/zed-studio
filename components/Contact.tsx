@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
-import { useSiteScroll } from "../lib/scroll";
+import { useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
 
 const FLOATERS = [
   {
@@ -33,7 +33,7 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
   const { scrollTo } = useSiteScroll();
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {

@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
@@ -10,7 +9,7 @@ import {
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { useSiteScroll } from "../lib/scroll";
+import { useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
 
 /* ================================================================== */
 /* PROJECT DATA — the single place to edit portfolio content.          */
@@ -594,7 +593,7 @@ function WorkCard({
 /* ------------------------------------------------------------------ */
 export default function WorksShowcase() {
   const roomRef = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
   const { scrollTo } = useSiteScroll();
 
   const { scrollYProgress } = useScroll({
@@ -602,12 +601,19 @@ export default function WorksShowcase() {
     offset: ["start start", "end end"],
   });
 
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.06, 0.82, 0.92], [0, 1, 1, 0]);
-  const titleScale = useTransform(scrollYProgress, [0, 0.12, 0.92], [0.86, 1, 1.06]);
+  // Hold the shared progress just below 1: framer's WAAPI fast-path finishes
+  // (and then blanks) scroll-linked style animations the instant raw progress
+  // hits 1 — which happens exactly when the pinned stage releases, wiping the
+  // ending overlay/View-all. All transforms below have already clamped to
+  // their end value by 0.99, so the ending holds instead of collapsing.
+  const progress = useTransform(scrollYProgress, (v) => Math.min(v, 0.99));
 
-  const overlayOpacity = useTransform(scrollYProgress, [0.84, 0.98], [0, 0.9]);
-  const viewAllOpacity = useTransform(scrollYProgress, [0.88, 0.96], [0, 1]);
-  const viewAllY = useTransform(scrollYProgress, [0.88, 0.96], [24, 0]);
+  const titleOpacity = useTransform(progress, [0, 0.06, 0.82, 0.92], [0, 1, 1, 0]);
+  const titleScale = useTransform(progress, [0, 0.12, 0.92], [0.86, 1, 1.06]);
+
+  const overlayOpacity = useTransform(progress, [0.84, 0.98], [0, 0.9]);
+  const viewAllOpacity = useTransform(progress, [0.88, 0.96], [0, 1]);
+  const viewAllY = useTransform(progress, [0.88, 0.96], [24, 0]);
 
   const ARCHIVE = PROJECTS;
 
@@ -635,7 +641,7 @@ export default function WorksShowcase() {
                 <WorkCard
                   key={project.slug}
                   project={project}
-                  progress={scrollYProgress}
+                  progress={progress}
                   index={i}
                 />
               ))}

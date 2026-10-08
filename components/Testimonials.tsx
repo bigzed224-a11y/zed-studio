@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useReducedMotionSafe } from "../lib/scroll";
 
 const QUOTES = [
   {
@@ -24,7 +25,7 @@ const QUOTES = [
 ];
 
 export default function Testimonials() {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionSafe();
 
   return (
     <section className="px-6 py-28 md:px-10 md:py-40">
