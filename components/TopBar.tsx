@@ -15,8 +15,8 @@ export default function TopBar() {
         aria-label="Back to top"
       >
         <Image
-          src="/images/zed-logo-main.png"
-          alt="Zed Studio logo"
+          src="/images/founder-avatar.png"
+          alt="Zed Studio — founder logo"
           width={40}
           height={40}
           className="rounded-md"

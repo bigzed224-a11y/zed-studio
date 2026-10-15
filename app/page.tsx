@@ -5,6 +5,7 @@ import About from "@/components/About";
 import CharReveal from "@/components/CharReveal";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Founder from "@/components/Founder";
 import Hero from "@/components/Hero";
 import Manifesto from "@/components/Manifesto";
 import ParallaxStrip from "@/components/ParallaxStrip";
@@ -25,8 +26,8 @@ export default function Home() {
         <Hero />
         <Ticker />
         <ParallaxStrip
-          src="/images/work/daniel-portrait-cover.webp"
-          alt="Fashion portrait work by Zed Studio"
+          src="/images/founder-cover.webp"
+          alt="Portrait of the founder of Zed Studio"
         />
         <Manifesto />
         <Projects />
@@ -38,6 +39,7 @@ export default function Home() {
         <Services />
         <Testimonials />
         <About />
+        <Founder />
         <Contact />
         <Footer />
       </main>

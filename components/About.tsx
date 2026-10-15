@@ -3,8 +3,8 @@ import CharReveal from "./CharReveal";
 
 const TICKER = [
   {
-    src: "/images/work/daniel-portrait-cover.webp",
-    alt: "Fashion model portrait",
+    src: "/images/founder-portrait.webp",
+    alt: "Founder of Zed Studio",
   },
   {
     src: "/images/work/wedding-save-the-date-cover.webp",
@@ -36,8 +36,8 @@ export default function About() {
         <div className="md:col-span-5">
           <div className="relative aspect-[4/5] overflow-hidden rounded-md">
             <Image
-              src="/images/work/daniel-portrait-cover.webp"
-              alt="Zed Studio — fashion portrait work"
+              src="/images/founder-portrait.webp"
+              alt="Portrait of the founder of Zed Studio"
               fill
               sizes="(max-width: 768px) 100vw, 40vw"
               className="object-cover"

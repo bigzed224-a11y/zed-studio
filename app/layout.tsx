@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "ui ux design",
     "web agency",
   ],
-  icons: { icon: "/images/zed-logo-main.png" },
+  icons: { icon: "/images/founder-avatar.png" },
   openGraph: {
     title: "Zed Studio — Websites, Branding & Digital Products",
     description:

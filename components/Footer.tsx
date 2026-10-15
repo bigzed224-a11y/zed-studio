@@ -25,8 +25,8 @@ export default function Footer() {
         <div className="flex flex-col gap-8">
           <div className="relative h-14 w-14 overflow-hidden rounded-lg">
             <Image
-              src="/images/zed-logo.webp"
-              alt="Zed Studio"
+              src="/images/founder-avatar.webp"
+              alt="Zed Studio — founder logo"
               fill
               sizes="56px"
               className="object-cover"
