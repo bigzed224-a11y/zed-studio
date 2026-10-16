@@ -15,22 +15,22 @@ const HIGHLIGHTS = [
   {
     meta: "12+ years",
     title: "Experience in tech",
-    body: "More than a decade building for the web — from early front-end experiments to production React and Next.js platforms.",
+    body: "From a first line of code to production React and Next.js platforms — over a decade of shipping, not just planning.",
   },
   {
     meta: "Design + code",
     title: "One pair of hands",
-    body: "Interface design, brand systems and the engineering that ships them live in the same head — no hand-offs, no lost intent.",
+    body: "Interfaces, brand systems and the engineering behind them — no hand-offs, no gap between design and build.",
   },
   {
     meta: "Worldwide",
     title: "Clients across time zones",
-    body: "Remote-first collaborations with founders, artists and brands — from the first sketch to the shipped product.",
+    body: "Founders, artists and brands on different continents, worked with directly — one studio, one point of contact.",
   },
   {
     meta: "13+ shipped",
     title: "Projects taken to launch",
-    body: "Websites, brand identities, art covers and print work delivered end to end — crafted in-house, pixel by pixel.",
+    body: "Websites, identities, art covers and print carried end to end — with the same care on launch day as on day one.",
   },
 ];
 
@@ -66,8 +66,8 @@ export default function Founder() {
         <motion.div {...enter()} className="md:col-span-5">
           <div className="relative aspect-[4/5] overflow-hidden rounded-md">
             <Image
-              src="/images/founder-portrait.webp"
-              alt="Portrait of the founder of Zed Studio"
+              src="/images/founder-closeup.webp"
+              alt="Close-up portrait of the founder of Zed Studio"
               fill
               sizes="(max-width: 768px) 100vw, 40vw"
               className="object-cover"
@@ -81,17 +81,18 @@ export default function Founder() {
         <div className="md:col-span-7">
           <CharReveal
             className="text-[clamp(1.8rem,4vw,3.6rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-beige"
-            text="Twelve years in tech — and every project still gets built, not outsourced."
+            text="Twelve years in tech — and he still ships the work himself."
           />
 
           <motion.p
             {...enter(0.1)}
             className="mt-8 max-w-xl text-lg leading-relaxed text-beige/70"
           >
-            Zed founded the studio on a simple belief: the person who designs a
-            product should care how it ships. Everything here — sites, brand
-            systems, motion, art covers and print — is drawn and built by the
-            same hands, from the first sketch to the final deploy.
+            Zed started the studio on one belief: whoever designs a product
+            should care how it ships. A decade in, he still writes the
+            production code, reviews every pixel and sees each project through
+            to launch — so nothing gets lost between the idea and what actually
+            ships.
           </motion.p>
 
           <dl className="mt-12 border-t border-line md:mt-16">

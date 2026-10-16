@@ -3,10 +3,6 @@ import CharReveal from "./CharReveal";
 
 const TICKER = [
   {
-    src: "/images/founder-portrait.webp",
-    alt: "Founder of Zed Studio",
-  },
-  {
     src: "/images/work/wedding-save-the-date-cover.webp",
     alt: "Save the date suite",
   },
@@ -33,19 +29,7 @@ export default function About() {
           [ The studio ]
         </span>
 
-        <div className="md:col-span-5">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-md">
-            <Image
-              src="/images/founder-portrait.webp"
-              alt="Portrait of the founder of Zed Studio"
-              fill
-              sizes="(max-width: 768px) 100vw, 40vw"
-              className="object-cover"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-10 md:col-span-4">
+        <div className="flex flex-col gap-10 md:col-span-6 md:col-start-7">
           <div>
             <span className="text-xs font-medium uppercase tracking-[0.08em] text-beige/60">
               [ What we are ]
@@ -78,7 +62,8 @@ export default function About() {
 
       <div className="mt-24 overflow-hidden md:mt-32">
         <div className="flex w-max animate-marquee gap-8">
-          {[...TICKER, ...TICKER].map((item, i) => (
+          {/* four copies so the -50% loop shift always exceeds wide viewports */}
+          {[...TICKER, ...TICKER, ...TICKER, ...TICKER].map((item, i) => (
             <div
               key={`${item.src}-${i}`}
               className="relative h-40 w-40 shrink-0 overflow-hidden rounded-md md:h-56 md:w-56"

@@ -35,6 +35,9 @@ const FLOATERS = [
 
 type Status = "idle" | "sending" | "success" | "error";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_ERROR = "Please enter a valid email address.";
+
 export default function Contact() {
   const { scrollTo } = useSiteScroll();
   const reduce = useReducedMotionSafe();
@@ -42,11 +45,29 @@ export default function Contact() {
   const kickerRef = useRef<HTMLSpanElement>(null);
   const kickerInView = useInView(kickerRef, { once: true, amount: 0.5 });
   const [status, setStatus] = useState<Status>("idle");
+  const [emailValue, setEmailValue] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  function validateEmail(value: string) {
+    const v = value.trim();
+    // empty is handled by the native `required` check; this covers malformed input
+    if (v.length > 0 && !EMAIL_RE.test(v)) {
+      setEmailError(EMAIL_ERROR);
+      return false;
+    }
+    setEmailError("");
+    return true;
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+    const email = String(data.get("email") ?? "").trim();
+    if (!validateEmail(email)) {
+      form.querySelector<HTMLInputElement>("input[name=email]")?.focus();
+      return;
+    }
     setStatus("sending");
     try {
       const res = await fetch("/api/contact", {
@@ -54,13 +75,25 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: String(data.get("name") ?? ""),
-          email: String(data.get("email") ?? ""),
+          email,
           message: String(data.get("message") ?? ""),
         }),
       });
+      if (res.status === 400) {
+        const body = (await res.json().catch(() => null)) as {
+          error?: string;
+        } | null;
+        if (body?.error && /email/i.test(body.error)) {
+          setEmailError(body.error);
+          setStatus("idle");
+          return;
+        }
+      }
       if (!res.ok) throw new Error("Request failed");
       setStatus("success");
+      setEmailError("");
       form.reset();
+      setEmailValue("");
     } catch {
       setStatus("error");
     }
@@ -147,9 +180,33 @@ export default function Contact() {
                 name="email"
                 type="email"
                 required
+                value={emailValue}
                 placeholder="you@example.com"
+                aria-invalid={emailError ? true : undefined}
+                aria-describedby={emailError ? "email-error" : undefined}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setEmailValue(v);
+                  if (emailError) validateEmail(v);
+                }}
+                onBlur={(e) => {
+                  if (e.target.value.trim().length > 0) validateEmail(e.target.value);
+                }}
+                onInvalid={() => setEmailError(EMAIL_ERROR)}
+                style={
+                  emailError ? { borderColor: "var(--color-gold)" } : undefined
+                }
                 className={inputClass}
               />
+              {emailError && (
+                <p
+                  id="email-error"
+                  role="alert"
+                  className="text-sm font-medium text-gold"
+                >
+                  {emailError}
+                </p>
+              )}
             </label>
           </div>
           <label className="flex flex-col gap-2">

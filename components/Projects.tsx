@@ -10,14 +10,9 @@ import { useIsMobile, useReducedMotionSafe } from "../lib/scroll";
 const GRID_ROWS: { src: string; alt: string; className: string }[][] = [
   [
     {
-      src: "/images/founder-portrait.webp",
-      alt: "Portrait of the founder of Zed Studio",
-      className: "md:col-span-4",
-    },
-    {
       src: "/images/work/business-card-0.webp",
       alt: "Black and gold business card",
-      className: "md:col-span-4 md:col-start-8 md:translate-y-24",
+      className: "md:col-span-4 md:col-start-2 md:translate-y-24",
     },
   ],
   [
