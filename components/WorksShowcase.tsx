@@ -8,8 +8,9 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useIsMobile, useReducedMotionSafe, useSiteScroll } from "../lib/scroll";
+import SmartVideo from "./SmartVideo";
 
 /* ================================================================== */
 /* PROJECT DATA — the single place to edit portfolio content.          */
@@ -420,93 +421,10 @@ const FEATURED = PROJECTS.filter((p) => p.feature);
 const ROOM_VH = 460; // a touch longer: 9 featured items now travel the room
 
 /* ------------------------------------------------------------------ */
-/* Video element: muted + playsInline + loop, preload=metadata, poster */
-/* first paint. Playback is driven by the showcase opacity MotionValue */
-/* (featured) or an IntersectionObserver (archive grid). No autoplay   */
-/* with sound anywhere, nothing loads aggressively.                     */
+/* Video playback lives in SmartVideo: preload=none + poster first     */
+/* paint, plays only while in view (IO / showcase playSignal), pauses  */
+/* when out, and never autoplays on mobile — a tap starts it.          */
 /* ------------------------------------------------------------------ */
-function ShowVideo({
-  src,
-  poster,
-  alt,
-  className,
-  playSignal, // optional MotionValue 0..1 — play while > .5
-}: {
-  src: string;
-  poster: string;
-  alt: string;
-  className?: string;
-  playSignal?: MotionValue<number>;
-}) {
-  const ref = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!playSignal) return;
-    const unsub = playSignal.on("change", (v) => {
-      const el = ref.current;
-      if (!el) return;
-      if (v > 0.5) {
-        if (el.paused) el.play().catch(() => {});
-      } else if (!el.paused) el.pause();
-    });
-    return unsub;
-  }, [playSignal]);
-
-  // Featured cards are always effectively "in view" while on stage; the
-  // playSignal drives them. Fallback IO for archive usage below mirrors this.
-  return (
-    <video
-      ref={ref}
-      className={className}
-      src={src}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      disablePictureInPicture
-      aria-label={alt}
-      role="img"
-    />
-  );
-}
-
-function ArchiveVideo({ src, poster, alt }: { src: string; poster: string; alt: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    const wrap = wrapRef.current;
-    if (!el || !wrap) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
-        else el.pause();
-      },
-      { threshold: 0.25 },
-    );
-    io.observe(wrap);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <div ref={wrapRef}>
-      <video
-        ref={ref}
-        src={src}
-        poster={poster}
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        disablePictureInPicture
-        aria-label={alt}
-        role="img"
-      />
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Featured floating card (pinned 3D showcase) — pure MotionValue math */
@@ -563,7 +481,7 @@ function WorkCard({
     >
       <div className="works-card-inner">
         {project.mediaType === "video" && project.media ? (
-          <ShowVideo
+          <SmartVideo
             src={project.media}
             poster={project.cover}
             alt={project.alt}
@@ -701,7 +619,7 @@ export default function WorksShowcase() {
               <article>
                 <div className="works-tile-media" style={{ aspectRatio: p.aspect }}>
                   {p.mediaType === "video" && p.media ? (
-                    <ArchiveVideo src={p.media} poster={p.cover} alt={p.alt} />
+                    <SmartVideo src={p.media} poster={p.cover} alt={p.alt} />
                   ) : (
                     <Image
                       src={p.cover}

@@ -19,6 +19,14 @@ import TopBar from "@/components/TopBar";
 export default function Home() {
   return (
     <SmoothScrollProvider>
+      {/* hero background poster is the LCP paint — preload it with priority;
+          the video itself stays preload=none until played */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/hero-poster.jpg"
+        fetchPriority="high"
+      />
       <Preloader />
       <Cursor />
       <TopBar />

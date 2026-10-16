@@ -62,7 +62,9 @@ export default function About() {
 
       <div className="mt-24 overflow-hidden md:mt-32">
         <div className="flex w-max animate-marquee gap-8">
-          {/* four copies so the -50% loop shift always exceeds wide viewports */}
+          {/* four copies keep the -50% loop shift wider than any viewport —
+              required for the seamless marquee. The duplicated copies are
+              lazy + async-decoded so they never cost eager loading/render. */}
           {[...TICKER, ...TICKER, ...TICKER, ...TICKER].map((item, i) => (
             <div
               key={`${item.src}-${i}`}
@@ -72,7 +74,9 @@ export default function About() {
                 src={item.src}
                 alt={i < TICKER.length ? item.alt : ""}
                 fill
-                sizes="224px"
+                sizes="(max-width: 768px) 160px, 224px"
+                loading="lazy"
+                decoding="async"
                 className="object-cover"
               />
             </div>

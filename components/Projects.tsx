@@ -100,7 +100,7 @@ function GridImage({
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 768px) 100vw, 40vw"
+        sizes="(max-width: 768px) 100vw, 34vw"
         className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
       />
     </motion.div>

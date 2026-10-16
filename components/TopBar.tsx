@@ -19,8 +19,8 @@ export default function TopBar() {
           alt="Zed Studio — founder logo"
           width={40}
           height={40}
+          sizes="40px"
           className="rounded-md"
-          priority
         />
         <span className="text-sm font-extrabold uppercase tracking-tight text-beige">
           Zed Studio<span className="text-gold">®</span>

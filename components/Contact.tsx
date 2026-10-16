@@ -113,7 +113,15 @@ export default function Contact() {
             key={f.src}
             className={`absolute overflow-hidden rounded-md ${f.className}`}
           >
-            <Image src={f.src} alt="" fill sizes="192px" className="object-cover" />
+            <Image
+              src={f.src}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 144px, 192px"
+              loading="lazy"
+              decoding="async"
+              className="object-cover"
+            />
           </div>
         ))}
       </div>

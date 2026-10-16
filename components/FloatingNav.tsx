@@ -17,7 +17,9 @@ export default function FloatingNav() {
       aria-label="Primary"
       className="fixed bottom-4 left-1/2 z-40 w-max max-w-[calc(100vw-1.5rem)] -translate-x-1/2"
     >
-      <div className="flex items-center gap-0.5 rounded-lg border border-line bg-ink-2/95 p-1.5 backdrop-blur min-[420px]:gap-1 min-[420px]:p-2">
+      {/* backdrop-blur only where hover/precision exists — dropped on mobile
+          (bg is already 95% opaque, so the look is unchanged) */}
+      <div className="flex items-center gap-0.5 rounded-lg border border-line bg-ink-2/95 p-1.5 backdrop-blur-none min-[420px]:gap-1 min-[420px]:p-2 md:backdrop-blur">
         {LINKS.map((link) => (
           <button
             key={link.href}

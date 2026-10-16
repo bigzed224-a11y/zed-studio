@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import type { ReactNode } from "react";
 import { useIsMobile, useLoaded, useReducedMotionSafe } from "../lib/scroll";
+import SmartVideo from "./SmartVideo";
 
 const EASE: [number, number, number, number] = [0.44, 0, 0.56, 1];
 
@@ -78,15 +79,14 @@ export default function Hero() {
 
   return (
     <section className="relative h-[100svh] min-h-[620px] overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/images/hero-poster.jpg"
-        aria-hidden
+      {/* preload=none + poster: the poster is the LCP paint (preloaded with
+          high priority in page.tsx); the clip streams in only while in view
+          on desktop, and never autoplays on mobile — tap starts it. */}
+      <SmartVideo
         src="/video-bg.mp4"
+        poster="/images/hero-poster.jpg"
+        ariaHidden
+        eager
         className="absolute inset-0 h-full w-full object-cover opacity-30"
       />
       <div

@@ -344,6 +344,14 @@ html.has-cursor * {
   gap: 22px;
 }
 
+/* Archive of 29 items: skip layout/paint/style for far-offscreen tiles.
+   `auto` remembers the real size once rendered, so the scrollbar stays
+   accurate; images/videos inside additionally lazy-load / preload=none. */
+.works-tile {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
 .works-tile article {
   position: relative;
   border: 1px solid var(--color-line);
